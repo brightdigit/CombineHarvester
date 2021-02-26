@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import CombineHarvesterKit
 
 @main
 struct CombineHarvesterApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+          LocationView().environmentObject(CoreLocationObject())
         }
     }
 }

@@ -23,3 +23,4 @@ targets:
       path: PLists/Application/Info.plist
       properties:
         CFBundleDisplayName: CombineHarvester
+        NSLocationWhenInUseUsageDescription: "In order to see your location, we need access to your location."

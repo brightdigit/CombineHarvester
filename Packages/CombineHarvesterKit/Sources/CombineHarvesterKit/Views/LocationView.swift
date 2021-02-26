@@ -21,11 +21,13 @@ extension CLAuthorizationStatus: CustomStringConvertible {
   }
 }
 
-struct LocationView: View {
+public struct LocationView: View {
   // CLLocationManager is basically a singleton so an EnvironmentObject ObservableObject makes sense
   @EnvironmentObject var locationObject: CoreLocationObject
 
-  var body: some View {
+  public init () {}
+  
+  public var body: some View {
     VStack {
       // use our extension method to display a description of the status
       Text("\(locationObject.authorizationStatus.description)")
