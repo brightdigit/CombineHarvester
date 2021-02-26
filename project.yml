@@ -1,0 +1,25 @@
+name: CombineHarvester
+options:
+  bundleIdPrefix: com.brightdigit
+packages:
+  CombineHarvesterKit:
+    path: ./Packages/CombineHarvesterKit
+targets:
+  CombineHarvester:
+    type: application
+    platform: iOS
+    scheme: {}
+    dependencies:
+      - package: CombineHarvesterKit
+      - sdk: CoreLocation.framework
+    sources:
+      - path: "Sources/Application"
+        name: Sources
+        group: Application
+      - path: "PLists/Application"
+        name: Sources
+        group: Application
+    info:
+      path: PLists/Application/Info.plist
+      properties:
+        CFBundleDisplayName: CombineHarvester
