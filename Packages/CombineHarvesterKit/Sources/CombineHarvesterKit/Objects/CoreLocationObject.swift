@@ -51,7 +51,7 @@ public class CoreLocationObject: ObservableObject {
   }
 
   func authorize() {
-    if CLLocationManager.authorizationStatus() == .notDetermined {
+    if self.manager.authorizationStatus == .notDetermined {
       manager.requestWhenInUseAuthorization()
     }
   }

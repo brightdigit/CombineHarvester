@@ -17,7 +17,7 @@ targets:
         name: Sources
         group: Application
       - path: "PLists/Application"
-        name: Sources
+        name: PLists
         group: Application
     info:
       path: PLists/Application/Info.plist

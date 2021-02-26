@@ -15,7 +15,7 @@ public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDeleg
   let locationSubject = PassthroughSubject<[CLLocation], Never>()
 
   public func authorizationPublisher() -> AnyPublisher<CLAuthorizationStatus, Never> {
-    return Just(CLLocationManager.authorizationStatus())
+    return Just(.notDetermined)
       .merge(with:
         authorizationSubject
       ).eraseToAnyPublisher()
@@ -33,8 +33,8 @@ public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDeleg
     // Implement to avoid crashes
     // Extra Credit: Create a publisher for errors :/
   }
-
-  public func locationManager(_: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-    authorizationSubject.send(status)
+  
+  public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    authorizationSubject.send(manager.authorizationStatus)
   }
 }
