@@ -1,0 +1,7 @@
+{
+  "set" : "../Assets/Media.xcassets/Logo.imageset",
+  "remove-alpha" : false,
+  "source" : "../Sources/harvester.svg",
+  "geometry" : null,
+  "background" : null
+}

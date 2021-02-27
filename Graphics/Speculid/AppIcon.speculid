@@ -1,0 +1,7 @@
+{
+  "set" : "../Assets/Media.xcassets/AppIcon.appiconset",
+  "remove-alpha" : true,
+  "source" : "../Sources/harvester.svg",
+  "geometry" : null,
+  "background" : "#FFFFFFFF"
+}

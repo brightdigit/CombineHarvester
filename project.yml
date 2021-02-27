@@ -19,6 +19,9 @@ targets:
       - path: "PLists/Application"
         name: PLists
         group: Application
+      - path: "Graphics/Assets"
+        name: Assets
+        group: Application
     info:
       path: PLists/Application/Info.plist
       properties:
