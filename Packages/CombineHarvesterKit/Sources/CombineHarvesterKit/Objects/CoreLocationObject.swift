@@ -2,6 +2,16 @@ import Combine
 import CoreLocation
 import SwiftUI
 
+extension CLAuthorizationStatus {
+  var isAuthorized : Bool {
+    #if os(macOS)
+    return self == .authorizedAlways
+    #else
+    return self == .authorizedAlways || self == .authorizedWhenInUse
+    #endif
+  }
+}
+
 public class CoreLocationObject: ObservableObject {
   @Published var authorizationStatus = CLAuthorizationStatus.notDetermined
   @Published var location: CLLocation?
@@ -57,7 +67,7 @@ public class CoreLocationObject: ObservableObject {
   }
 
   func beginUpdates(_ authorizationStatus: CLAuthorizationStatus) {
-    if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+    if authorizationStatus.isAuthorized {
       manager.startUpdatingLocation()
     }
   }
