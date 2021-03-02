@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         runs-on:  [macos-11.0]
-        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app","/Applications/Xcode_12.5.app"]
+        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app"]
 
     steps:
     - name: Install Dependencies
@@ -29,6 +29,8 @@ jobs:
       run: xcodegen
     - name: Build Xcode Project
       run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
+    - name: List
+      run: ls /Applications/Xcode*
 
   swiftpackage:
     env:
@@ -44,7 +46,7 @@ jobs:
     strategy:
       matrix:
         runs-on:  [macos-11.0]
-        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app","/Applications/Xcode_12.5.app"]
+        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app"]
 
     steps:
     - uses: actions/checkout@v2
