@@ -3,11 +3,11 @@ import CoreLocation
 import SwiftUI
 
 extension CLAuthorizationStatus {
-  var isAuthorized : Bool {
+  var isAuthorized: Bool {
     #if os(macOS)
-    return self == .authorizedAlways
+      return self == .authorizedAlways
     #else
-    return self == .authorizedAlways || self == .authorizedWhenInUse
+      return self == .authorizedAlways || self == .authorizedWhenInUse
     #endif
   }
 }
@@ -39,29 +39,27 @@ public class CoreLocationObject: ObservableObject {
       .store(in: &cancellables)
 
     // set authorization status when authorization changes
-      authorizationPublisher
-        // since this is used in the UI,
-        //  it needs to be on the main DispatchQueue
-        .receive(on: DispatchQueue.main)
-        // store the value in the authorizationStatus property
-        .assign(to: &$authorizationStatus)
+    authorizationPublisher
+      // since this is used in the UI,
+      //  it needs to be on the main DispatchQueue
+      .receive(on: DispatchQueue.main)
+      // store the value in the authorizationStatus property
+      .assign(to: &$authorizationStatus)
 
-
-      locationPublisher
-        // convert the array of CLLocation into a Publisher itself
-        .flatMap(Publishers.Sequence.init(sequence:))
-        // in order to match the property map to Optional
-        .map { $0 as CLLocation? }
-        // since this is used in the UI,
-        //  it needs to be on the main DispatchQueue
-        .receive(on: DispatchQueue.main)
-        // store the value in the location property
-        .assign(to: &$location)
-   
+    locationPublisher
+      // convert the array of CLLocation into a Publisher itself
+      .flatMap(Publishers.Sequence.init(sequence:))
+      // in order to match the property map to Optional
+      .map { $0 as CLLocation? }
+      // since this is used in the UI,
+      //  it needs to be on the main DispatchQueue
+      .receive(on: DispatchQueue.main)
+      // store the value in the location property
+      .assign(to: &$location)
   }
 
   func authorize() {
-    if self.manager.authorizationStatus == .notDetermined {
+    if manager.authorizationStatus == .notDetermined {
       manager.requestWhenInUseAuthorization()
     }
   }

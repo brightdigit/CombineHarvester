@@ -27,6 +27,8 @@ jobs:
       run: speculid --process . 
     - name: Create Xcode Project
       run: xcodegen
+    - name: Build Xcode Project
+      run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
 
   swiftpackage:
     env:
