@@ -33,7 +33,7 @@ public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDeleg
     // Implement to avoid crashes
     // Extra Credit: Create a publisher for errors :/
   }
-  
+
   public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     authorizationSubject.send(manager.authorizationStatus)
   }
