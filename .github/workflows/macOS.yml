@@ -11,6 +11,10 @@ on:
 jobs:
   xcodeproj: 
     needs: swiftpackage
+    
+    defaults:
+      run:
+        working-directory: .
 
     runs-on: macos-latest
     if: "!contains(github.event.head_commit.message, 'ci skip')"
@@ -22,7 +26,7 @@ jobs:
 
     steps:
     - name: Install Dependencies
-      run: brew bundle
+      run: ls; brew bundle;
     - name: Build Graphics
       run: speculid --process . 
     - name: Create Xcode Project
