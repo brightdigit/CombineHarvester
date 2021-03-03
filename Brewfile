@@ -1,4 +1,4 @@
 tap "brightdigit/speculid"
-tap "caskroom/cask"
+tap "homebrew/cask"
 brew "xcodegen"
 cask "speculid"
