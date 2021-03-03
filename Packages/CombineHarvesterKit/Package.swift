@@ -25,10 +25,6 @@ let package = Package(
     .target(
       name: "CombineHarvesterKit",
       dependencies: []
-    ),
-    .testTarget(
-      name: "CombineHarvesterKitTests",
-      dependencies: ["CombineHarvesterKit"]
     )
   ]
 )
