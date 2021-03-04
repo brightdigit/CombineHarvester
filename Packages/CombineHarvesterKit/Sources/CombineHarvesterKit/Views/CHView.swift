@@ -10,7 +10,13 @@ public struct CHView: View {
           Image(systemName: "location.fill")
           Text("Location")
         }
-      }
+      }.tag(1)
+      BaconView().tabItem {
+        VStack{
+          Image(systemName: "mouth")
+          Text("Bacon")
+        }
+      }.tag(2)
     }.edgesIgnoringSafeArea(.all)
   }
 }

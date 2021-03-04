@@ -12,7 +12,7 @@ import CombineHarvesterKit
 struct CombineHarvesterApp: App {
     var body: some Scene {
         WindowGroup {
-          CHView().environmentObject(CoreLocationObject())
+          CHView().environmentObject(CoreLocationObject()).environmentObject(BaconObject())
         }
     }
 }
