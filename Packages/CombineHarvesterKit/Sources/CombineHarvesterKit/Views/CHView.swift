@@ -12,7 +12,7 @@ public struct CHView: View {
         }
       }.tag(1)
       BaconView().tabItem {
-        VStack{
+        VStack {
           Image(systemName: "mouth")
           Text("Bacon")
         }

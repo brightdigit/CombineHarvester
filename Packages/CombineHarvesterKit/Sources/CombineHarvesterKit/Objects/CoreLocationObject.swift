@@ -2,7 +2,6 @@ import Combine
 import CoreLocation
 import SwiftUI
 
-
 public class CoreLocationObject: ObservableObject {
   @Published var authorizationStatus = CLAuthorizationStatus.notDetermined
   @Published var location: CLLocation?

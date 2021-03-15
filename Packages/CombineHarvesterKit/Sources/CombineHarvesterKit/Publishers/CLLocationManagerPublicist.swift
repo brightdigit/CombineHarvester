@@ -2,7 +2,6 @@ import Combine
 import CoreLocation
 import SwiftUI
 
-
 public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDelegate {
   let authorizationSubject = PassthroughSubject<CLAuthorizationStatus, Never>()
 
