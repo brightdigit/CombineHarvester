@@ -2,15 +2,6 @@ import Combine
 import CoreLocation
 import SwiftUI
 
-extension CLAuthorizationStatus {
-  var isAuthorized: Bool {
-    #if os(macOS)
-      return self == .authorizedAlways
-    #else
-      return self == .authorizedAlways || self == .authorizedWhenInUse
-    #endif
-  }
-}
 
 public class CoreLocationObject: ObservableObject {
   @Published var authorizationStatus = CLAuthorizationStatus.notDetermined
