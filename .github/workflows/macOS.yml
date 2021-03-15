@@ -24,7 +24,7 @@ jobs:
       run: xcodegen
     - name: Remove Dev Dependencies
       run: swift run rocket _
-      working-directory: ./ Packages/CombineHarvesterKit
+      working-directory: ./Packages/CombineHarvesterKit
     - name: pull-request
       uses: repo-sync/pull-request@v2
       with:
