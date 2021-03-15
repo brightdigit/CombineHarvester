@@ -9,6 +9,27 @@ on:
     tags: '*'
 
 jobs:
+  publish:
+    needs: xcodeproj
+
+    runs-on: macos-latest
+
+    steps:    
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: brew bundle
+    - name: Build Graphics
+      run: speculid --process . 
+    - name: Create Xcode Project
+      run: xcodegen
+    - name: Remove Dev Dependencies
+      run: swift run rocket _
+      working-directory: ./ Packages/CombineHarvesterKit
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "main"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
   xcodeproj: 
     needs: swiftpackage
 
