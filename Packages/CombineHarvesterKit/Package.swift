@@ -39,6 +39,10 @@ let package = Package(
   // let requiredCoverage: Int = 1
 
   let config = PackageConfiguration([
+    "rocket" : ["steps":
+            [
+                "hide_dev_dependencies"
+            ]],
     "komondor": [
       //      "pre-push": [
 //        //"swift test --enable-code-coverage --enable-test-discovery",
