@@ -1,4 +1,4 @@
-brew "swiftformat"
-brew "swiftlint"
-brew "sourcedocs"
-brew "carthage"
+tap "brightdigit/speculid"
+tap "homebrew/cask"
+brew "xcodegen"
+cask "speculid"

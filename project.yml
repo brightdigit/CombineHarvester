@@ -1,0 +1,31 @@
+name: CombineHarvester
+options:
+  bundleIdPrefix: com.brightdigit
+packages:
+  CombineHarvesterKit:
+    path: ./Packages/CombineHarvesterKit
+targets:
+  CombineHarvester:
+    type: application
+    platform: iOS
+    scheme: {}
+    dependencies:
+      - package: CombineHarvesterKit
+      - sdk: CoreLocation.framework
+    sources:
+      - path: "Sources/Application"
+        name: Sources
+        group: Application
+      - path: "PLists/Application"
+        name: PLists
+        group: Application
+      - path: "Graphics/Assets"
+        name: Assets
+        group: Application
+    info:
+      path: PLists/Application/Info.plist
+      properties:
+        CFBundleDisplayName: CombineHarvester
+        NSLocationWhenInUseUsageDescription: "In order to see your location, we need access to your location."
+        UILaunchScreen: 
+          UIImageName: Logo
