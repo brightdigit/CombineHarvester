@@ -36,7 +36,7 @@ jobs:
       run: swift run rocket _
       working-directory: ./source/Packages/CombineHarvesterKit
     - name: Sync Deliverable
-      run: rsync -avu --delete --exclude='.git/' "./source" "./main" 
+      run: rsync -rav --delete --exclude='.git/' "./source/" "./main/" 
       working-directory: .
     - name: Gitignore
       run: mv publish.gitignore .gitignore
