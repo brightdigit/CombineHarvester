@@ -128,4 +128,8 @@ iOSInjectionProject/
 
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
+
+Brewfile*
+.github
+.gitkeep
 # End of https://www.gitignore.io/api/xcode,swift,macos
