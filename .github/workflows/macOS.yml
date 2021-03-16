@@ -70,6 +70,7 @@ jobs:
         git push
 
   publish:
+    if: github.ref == 'refs/heads/develop'
     needs: xcodeproj
 
     runs-on: macos-latest
@@ -111,7 +112,7 @@ jobs:
         git rm --cached -r --ignore-unmatch *
         git rm --cached -r --ignore-unmatch .github
         git add .
-        git commit -m "generated"
+        git commit -m "from developer $GITHUB_SHA"
         git push
       working-directory: ./main
 
