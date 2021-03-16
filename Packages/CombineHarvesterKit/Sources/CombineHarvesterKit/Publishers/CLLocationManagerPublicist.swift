@@ -2,13 +2,6 @@ import Combine
 import CoreLocation
 import SwiftUI
 
-public protocol CLLocationManagerCombineDelegate: CLLocationManagerDelegate {
-  func authorizationPublisher() -> AnyPublisher<CLAuthorizationStatus, Never>
-  func locationPublisher() -> AnyPublisher<[CLLocation], Never>
-  // func headingPublisher() -> AnyPublisher<CLHeading?, Never>
-  // func errorPublisher() -> AnyPublisher<Error?, Never>
-}
-
 public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDelegate {
   let authorizationSubject = PassthroughSubject<CLAuthorizationStatus, Never>()
 
@@ -33,7 +26,7 @@ public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDeleg
     // Implement to avoid crashes
     // Extra Credit: Create a publisher for errors :/
   }
-  
+
   public func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
     authorizationSubject.send(manager.authorizationStatus)
   }
