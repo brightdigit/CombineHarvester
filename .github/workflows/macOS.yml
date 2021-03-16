@@ -37,7 +37,7 @@ jobs:
       working-directory: ./source/Packages/CombineHarvesterKit
     - name: Sync Deliverable
       run: rsync -avu --delete --exclude='.git/' "./source" "./main" 
-      working-directory: ./main
+      working-directory: .
     - name: Update Main
       run: |
         date > generated.txt
