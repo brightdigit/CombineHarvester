@@ -30,8 +30,6 @@ jobs:
       run: xcodegen
     - name: Build Xcode Project
       run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
-    - name: List
-      run: ls /Applications/Xcode*
 
   swiftpackage:
     env:
@@ -70,3 +68,50 @@ jobs:
         git add Documentation
         git diff-index --quiet HEAD || git commit -m "[github action] [ci skip] Update Docs"
         git push
+
+  publish:
+    needs: xcodeproj
+
+    runs-on: macos-latest
+  
+    defaults:
+      run:
+        working-directory: ./source
+
+    steps:    
+    - uses: actions/checkout@v2
+      with:
+        path: source
+    - uses: actions/checkout@v2
+      with:
+        ref: main
+        path: main
+    - name: Install Dependencies
+      run: brew bundle
+    - name: Build Graphics
+      run: speculid --process . 
+    - name: Create Xcode Project
+      run: xcodegen
+    - name: Remove Dev Dependencies
+      run: swift run rocket _
+      working-directory: ./source/Packages/CombineHarvesterKit
+    - name: Sync Deliverable
+      run: rsync -rav --delete --exclude='.git/' "./source/" "./main/" 
+      working-directory: .
+    - name: Build Xcode Project
+      run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
+      working-directory: ./main
+    - name: Gitignore
+      run: mv publish.gitignore .gitignore
+      working-directory: ./main
+    - name: Update Main
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git rm --cached -r --ignore-unmatch *
+        git rm --cached -r --ignore-unmatch .github
+        git add .
+        git commit -m "generated"
+        git push
+      working-directory: ./main
+
