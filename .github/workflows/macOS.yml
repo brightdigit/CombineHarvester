@@ -38,6 +38,9 @@ jobs:
     - name: Sync Deliverable
       run: rsync -avu --delete --exclude='.git/' "./source" "./main" 
       working-directory: .
+    - name: Gitignore
+      run: mv publish.gitignore .gitignore
+      working-directory: ./main
     - name: Update Main
       run: |
         date > generated.txt
