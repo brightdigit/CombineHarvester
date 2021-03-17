@@ -10,5 +10,5 @@ public class BaconObject: ObservableObject
 ### `init(timerInterval:)`
 
 ```swift
-public init(timerInterval _: TimeInterval = 1.0)
+public init(timerInterval: TimeInterval = 1.0)
 ```

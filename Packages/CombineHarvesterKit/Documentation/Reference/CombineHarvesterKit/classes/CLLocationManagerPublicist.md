@@ -6,17 +6,24 @@
 public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDelegate
 ```
 
-## Methods
-### `authorizationPublisher()`
+## Properties
+### `authorizationPublisher`
 
 ```swift
-public func authorizationPublisher() -> AnyPublisher<CLAuthorizationStatus, Never>
+public let authorizationPublisher: AnyPublisher<CLAuthorizationStatus, Never>
 ```
 
-### `locationPublisher()`
+### `locationPublisher`
 
 ```swift
-public func locationPublisher() -> AnyPublisher<[CLLocation], Never>
+public let locationPublisher: AnyPublisher<[CLLocation], Never>
+```
+
+## Methods
+### `init()`
+
+```swift
+override public init()
 ```
 
 ### `locationManager(_:didUpdateLocations:)`
