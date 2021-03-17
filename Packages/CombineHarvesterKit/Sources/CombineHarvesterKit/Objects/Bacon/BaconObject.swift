@@ -2,7 +2,6 @@ import Combine
 import Foundation
 
 public class BaconObject: ObservableObject {
-  @Published var value: Int
   @Published var words = [BaconSentence]()
 
   @Published var requestSize: Int = 1
@@ -11,16 +10,20 @@ public class BaconObject: ObservableObject {
 
   static let baseURL = URLComponents(string: "https://baconipsum.com/api/?type=all-meat&format=json")!
 
-  public init(timerInterval _: TimeInterval = 1.0) {
-    value = 0
+  static func url(basedOnSizeOf size: Int) -> URL {
+    var newURL = baseURL
+    newURL.queryItems?.append(URLQueryItem(name: "paras", value: size.description))
+    return newURL.url!
+  }
+
+  public init(timerInterval: TimeInterval = 1.0) {
+    seconds = timerInterval
 
     let urlSession = URLSession.shared
 
-    let urlPublisher = $requestSize.map { (size) -> URL in
-      var newURL = Self.baseURL
-      newURL.queryItems?.append(URLQueryItem(name: "paras", value: size.description))
-      return newURL.url!
-    }.flatMap(urlSession.dataTaskPublisher(for:))
+    let urlPublisher = $requestSize
+      .map(Self.url(basedOnSizeOf:))
+      .flatMap(urlSession.dataTaskPublisher(for:))
       .map(\.data)
       .decode(type: [String].self, decoder: JSONDecoder())
       .replaceError(with: [String]())

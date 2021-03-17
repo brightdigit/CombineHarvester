@@ -7,15 +7,18 @@ public class CLLocationManagerPublicist: NSObject, CLLocationManagerCombineDeleg
 
   let locationSubject = PassthroughSubject<[CLLocation], Never>()
 
-  public func authorizationPublisher() -> AnyPublisher<CLAuthorizationStatus, Never> {
-    return Just(.notDetermined)
+  public let authorizationPublisher: AnyPublisher<CLAuthorizationStatus, Never>
+
+  public let locationPublisher: AnyPublisher<[CLLocation], Never>
+
+  override public init() {
+    authorizationPublisher = Just(.notDetermined)
       .merge(with:
         authorizationSubject
       ).eraseToAnyPublisher()
-  }
 
-  public func locationPublisher() -> AnyPublisher<[CLLocation], Never> {
-    return locationSubject.eraseToAnyPublisher()
+    locationPublisher = locationSubject.eraseToAnyPublisher()
+    super.init()
   }
 
   public func locationManager(_: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
