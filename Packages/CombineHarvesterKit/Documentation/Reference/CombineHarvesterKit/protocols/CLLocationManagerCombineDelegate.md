@@ -6,15 +6,15 @@
 public protocol CLLocationManagerCombineDelegate: CLLocationManagerDelegate
 ```
 
-## Methods
-### `authorizationPublisher()`
+## Properties
+### `authorizationPublisher`
 
 ```swift
-func authorizationPublisher() -> AnyPublisher<CLAuthorizationStatus, Never>
+var authorizationPublisher: AnyPublisher<CLAuthorizationStatus, Never>
 ```
 
-### `locationPublisher()`
+### `locationPublisher`
 
 ```swift
-func locationPublisher() -> AnyPublisher<[CLLocation], Never>
+var locationPublisher: AnyPublisher<[CLLocation], Never>
 ```

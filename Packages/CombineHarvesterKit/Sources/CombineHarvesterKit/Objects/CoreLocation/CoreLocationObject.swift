@@ -20,23 +20,22 @@ public class CoreLocationObject: ObservableObject {
     self.manager = manager
     self.publicist = publicist
 
-    let authorizationPublisher = publicist.authorizationPublisher()
-    let locationPublisher = publicist.locationPublisher()
-
     // trigger an update when authorization changes
-    authorizationPublisher
+    publicist.authorizationPublisher
+      .filter { $0.isAuthorized }
+      .map { _ in () }
       .sink(receiveValue: beginUpdates)
       .store(in: &cancellables)
 
     // set authorization status when authorization changes
-    authorizationPublisher
+    publicist.authorizationPublisher
       // since this is used in the UI,
       //  it needs to be on the main DispatchQueue
       .receive(on: DispatchQueue.main)
       // store the value in the authorizationStatus property
       .assign(to: &$authorizationStatus)
 
-    locationPublisher
+    publicist.locationPublisher
       // convert the array of CLLocation into a Publisher itself
       .flatMap(Publishers.Sequence.init(sequence:))
       // in order to match the property map to Optional
@@ -54,9 +53,7 @@ public class CoreLocationObject: ObservableObject {
     }
   }
 
-  func beginUpdates(_ authorizationStatus: CLAuthorizationStatus) {
-    if authorizationStatus.isAuthorized {
-      manager.startUpdatingLocation()
-    }
+  func beginUpdates() {
+    manager.startUpdatingLocation()
   }
 }
