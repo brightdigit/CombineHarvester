@@ -1,0 +1,118 @@
+name: macOS
+
+on:
+  push:
+    branches:
+      - '*'
+      - 'feature/*'
+      - 'release/*'
+    tags: '*'
+
+jobs:
+  xcodeproj: 
+    needs: swiftpackage
+
+    runs-on: macos-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    strategy:
+      matrix:
+        runs-on:  [macos-11.0]
+        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app"]
+
+    steps:    
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: brew bundle
+    - name: Build Graphics
+      run: speculid --process . 
+    - name: Create Xcode Project
+      run: xcodegen
+    - name: Build Xcode Project
+      run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
+
+  swiftpackage:
+    env:
+      PACKAGE_NAME: CombineHarvesterKit
+
+    runs-on: macos-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip')"
+
+    defaults:
+      run:
+        working-directory: ./Packages/CombineHarvesterKit
+
+    strategy:
+      matrix:
+        runs-on:  [macos-11.0]
+        xcode: ["/Applications/Xcode_12.2.app","/Applications/Xcode_12.3.app","/Applications/Xcode_12.4.app"]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set Xcode Name
+      run: echo "XCODE_NAME=$(basename -- ${{ matrix.xcode }} | sed 's/\.[^.]*$//' | cut -d'_' -f2)" >> $GITHUB_ENV
+    - name: Setup Xcode
+      run: sudo xcode-select -s ${{ matrix.xcode }}/Contents/Developer
+    - name: Build
+      run: swift build -v
+    - name: Lint
+      if: startsWith(github.ref, 'refs/tags/') != true
+      run: swift run swiftformat --lint . && swift run swiftlint
+    - name: Build Documentation
+      if: ${{ matrix.os == 'macos-11.0' && matrix.xcode == '/Applications/Xcode_12.4.app' && !startsWith(github.ref, 'refs/tags/') }}
+      run: |
+        swift run sourcedocs generate build -cra
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git status
+        git add Documentation
+        git diff-index --quiet HEAD || git commit -m "[github action] [ci skip] Update Docs"
+        git push
+
+  publish:
+    if: github.ref == 'refs/heads/develop'
+    needs: xcodeproj
+
+    runs-on: macos-latest
+  
+    defaults:
+      run:
+        working-directory: ./source
+
+    steps:    
+    - uses: actions/checkout@v2
+      with:
+        path: source
+    - uses: actions/checkout@v2
+      with:
+        ref: main
+        path: main
+    - name: Install Dependencies
+      run: brew bundle
+    - name: Build Graphics
+      run: speculid --process . 
+    - name: Create Xcode Project
+      run: xcodegen
+    - name: Remove Dev Dependencies
+      run: swift run rocket _
+      working-directory: ./source/Packages/CombineHarvesterKit
+    - name: Sync Deliverable
+      run: rsync -rav --delete --exclude='.git/' "./source/" "./main/" 
+      working-directory: .
+    - name: Build Xcode Project
+      run: xcodebuild -sdk iphonesimulator -scheme CombineHarvester
+      working-directory: ./main
+    - name: Gitignore
+      run: mv publish.gitignore .gitignore
+      working-directory: ./main
+    - name: Update Main
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git rm --cached -r --ignore-unmatch *
+        git rm --cached -r --ignore-unmatch .github
+        git add .
+        git commit -m "from developer $GITHUB_SHA"
+        git push
+      working-directory: ./main
+
