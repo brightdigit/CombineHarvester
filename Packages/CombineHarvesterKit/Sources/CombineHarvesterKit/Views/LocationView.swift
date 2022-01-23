@@ -76,30 +76,31 @@ public struct LocationView: View {
   public init() {}
 
   public var body: some View {
-    VStack {
-      // use our extension method to display a description of the status
-      self.viewForAuthorizationStatus(self.locationObject.authorizationStatus)
-
-      // use Optional.map to hide the Text if there's no location
-      self.locationObject.location.map(
-        self.viewForLocation(_:)
-      )
-    }
+    EmptyView()
+//    VStack {
+//      // use our extension method to display a description of the status
+//      self.viewForAuthorizationStatus(self.locationObject.authorizationStatus)
+//
+//      // use Optional.map to hide the Text if there's no location
+//      self.locationObject.location.map(
+//        self.viewForLocation(_:)
+//      )
+//    }
   }
 
-  @ViewBuilder
-  func viewForAuthorizationStatus(_: CLAuthorizationStatus) -> some View {
-    if locationObject.authorizationStatus == .notDetermined {
-      Button(action: locationObject.authorize) {
-        HStack {
-          Image(systemName: "location.fill")
-          Text("Authorize")
-        }
-      }.padding(8).background(Color.blue).cornerRadius(10.0).foregroundColor(.white)
-    } else {
-      Text("\(locationObject.authorizationStatus.description)").font(.footnote).opacity(0.5)
-    }
-  }
+//  @ViewBuilder
+//  func viewForAuthorizationStatus(_: CLAuthorizationStatus) -> some View {
+//    if locationObject.authorizationStatus == .notDetermined {
+//      Button(action: locationObject.authorize) {
+//        HStack {
+//          Image(systemName: "location.fill")
+//          Text("Authorize")
+//        }
+//      }.padding(8).background(Color.blue).cornerRadius(10.0).foregroundColor(.white)
+//    } else {
+//      Text("\(locationObject.authorizationStatus.description)").font(.footnote).opacity(0.5)
+//    }
+//  }
 
   func description(fromValue value: Double) -> String! {
     numberFormatter.string(from: NSNumber(value: value))
