@@ -121,16 +121,15 @@ iOSInjectionProject/
 
 ## Xcode Patch
 *.xcodeproj/*
-#!*.xcodeproj/project.pbxproj
-#!*.xcodeproj/xcshareddata/
-#!*.xcworkspace/contents.xcworkspacedata
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
 /*.gcno
 
 ### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-PLists
-!.gitkeep
-**/*.xcassets/**/*.png
-**/*.xcassets/**/*.pdf
+Brewfile*
+.github
+.gitkeep
 # End of https://www.gitignore.io/api/xcode,swift,macos
